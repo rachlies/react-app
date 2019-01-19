@@ -13,19 +13,18 @@ class App extends Component {
     showContent : true
   };
 
-  switchButtonHandler = (newname) => {
-    // console.log("hellow!");
-    this.setState({
-      person : [
-        {Name : "Roshan", Age : 25},
-        {Name : newname, Age : 23}
-      ]
-    })
-  }
-
+  // switchButtonHandler = (newname) => {
+  
+  //   this.setState({
+  //     person : [
+  //       {Name : "Roshan", Age : 25},
+  //       {Name : newname, Age : 23}
+  //     ]
+  //   })
+  // }
 
   nameChangedHandler = (event) => {
-    // console.log("hellow!");
+    
     this.setState({
       person : [
         {Name : "Roshan", Age : 25},
@@ -35,9 +34,20 @@ class App extends Component {
   }
 
   toggleHandler = () => {
+    
     const flag = this.state.showContent;
     this.setState({
       showContent : !flag
+    })
+  }
+
+  deletePersonHandler = (idx) => {
+    
+    // const person = this.state.person; // non - immutable 
+    const person = [...this.state.person]; // immutable way of manipulating the state
+    person.splice(idx,1);
+    this.setState({
+      person: person
     })
   }
 
@@ -56,8 +66,9 @@ class App extends Component {
     if(this.state.showContent) {
       person = (
         <div>
-          {this.state.person.map(p => {
+          {this.state.person.map((p,idx) => {
             return <Person 
+                    click = {() => this.deletePersonHandler(idx)}
                     Name = {p.Name}
                     Age = {p.Age}/>
           })}
