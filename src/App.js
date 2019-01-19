@@ -13,23 +13,20 @@ class App extends Component {
     showContent : true
   };
 
-  // switchButtonHandler = (newname) => {
-  
-  //   this.setState({
-  //     person : [
-  //       {Name : "Roshan", Age : 25},
-  //       {Name : newname, Age : 23}
-  //     ]
-  //   })
-  // }
-
-  nameChangedHandler = (event) => {
+  nameChangedHandler = (event, id) => {
     
+    const p_idx = this.state.person.findIndex(p => {
+      return p.id === id;
+    });
+
+    const p = {...this.state.person[p_idx]};
+    p.Name = event.target.value;
+
+    const p1 = [...this.state.person];
+    p1[p_idx] = p;
+
     this.setState({
-      person : [
-        {Name : "Roshan", Age : 25},
-        {Name : event.target.value, Age : 23}
-      ]
+      person : p1
     })
   }
 
@@ -53,17 +50,10 @@ class App extends Component {
 
   render() {
 
-    // const style = {
-    //   backgroundColor: 'white',
-    //   font: 'inherit',
-    //   border: '1px solid blue',
-    //   padding: '8px',
-    //   cursor: 'pointer'
-    // };
-
     let person = null;
 
     if(this.state.showContent) {
+      
       person = (
         <div>
           {this.state.person.map((p,idx) => {
@@ -71,17 +61,19 @@ class App extends Component {
                     click = {() => this.deletePersonHandler(idx)}
                     Name = {p.Name}
                     Age = {p.Age}
-                    key = {p.id}/>
+                    key = {p.id}
+                    changed = {(event) => this.nameChangedHandler(event, p.id)}/>
           })}
         </div>
       )
     }
+
     return (
+      
       <div className="App">
         <h1>React app</h1>
         <p>It's working!!</p>
         <button 
-          // style = {style}
           onClick = {this.toggleHandler}>Switch Names</button>
         {person}  
       </div>
