@@ -8,7 +8,8 @@ class App extends Component {
   state = {
     person : [
       {id: 'kdsljf', Name : "Roshan", Age : 25},
-      {id: 'ldfkm', Name : "Priya", Age : 23}
+      {id: 'ldfkm', Name : "Priya", Age : 23},
+      {id: 'jckn', Name : "Palak", Age : 23}
     ],
     showContent : true
   };
@@ -61,6 +62,8 @@ class App extends Component {
 
     let person = null;
     let buttonMsg = "Show";
+    
+
     if(this.state.showContent) {
       
       person = (
@@ -78,12 +81,20 @@ class App extends Component {
       style.backgroundColor = 'red';
       buttonMsg = "Hide";
     }
+    let classes = [];
+
+    if(this.state.person.length <= 2) {
+      classes.push('red');
+    }
+    if(this.state.person.length <= 1) {
+      classes.push('bold');
+    }
 
     return (
       
       <div className="App">
         <h1>React app</h1>
-        <p>It's working!!</p>
+        <p className={classes.join(' ')}>It's working!!</p>
         <button 
           style = {style}
           onClick = {this.toggleHandler}>{buttonMsg}</button>
