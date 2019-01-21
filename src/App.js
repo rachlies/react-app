@@ -50,8 +50,17 @@ class App extends Component {
 
   render() {
 
-    let person = null;
+    const style = {
+      backgroundColor: 'green',
+      color: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    }
 
+    let person = null;
+    let buttonMsg = "Show";
     if(this.state.showContent) {
       
       person = (
@@ -66,6 +75,8 @@ class App extends Component {
           })}
         </div>
       )
+      style.backgroundColor = 'red';
+      buttonMsg = "Hide";
     }
 
     return (
@@ -74,7 +85,8 @@ class App extends Component {
         <h1>React app</h1>
         <p>It's working!!</p>
         <button 
-          onClick = {this.toggleHandler}>Switch Names</button>
+          style = {style}
+          onClick = {this.toggleHandler}>{buttonMsg}</button>
         {person}  
       </div>
     );
