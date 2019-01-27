@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classes from './App.css';
-import Person from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons';
 
 
 
@@ -60,14 +60,9 @@ class App extends Component {
       
       person = (
         <div>
-          {this.state.person.map((p,idx) => {
-            return <Person 
-                    click = {() => this.deletePersonHandler(idx)}
-                    Name = {p.Name}
-                    Age = {p.Age}
-                    key = {p.id}
-                    changed = {(event) => this.nameChangedHandler(event, p.id)}/>
-          })}
+          <Persons person = {this.state.person}
+                   clicked = {this.deletePersonHandler}
+                   changed = {this.nameChangedHandler}></Persons>
         </div>
       )
       buttonMsg = "Hide";
