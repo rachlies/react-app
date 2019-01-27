@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
-
+import Cockpit from '../components/Cockpit/Cockpit';
 
 
 class App extends Component {
 
   state = {
-    person : [
+    persons : [
       {id: 'kdsljf', Name : "Roshan", Age : 25},
       {id: 'ldfkm', Name : "Priya", Age : 23},
       {id: 'jckn', Name : "Palak", Age : 23}
@@ -16,24 +16,19 @@ class App extends Component {
   };
 
   nameChangedHandler = (event, id) => {
-    
-    const p_idx = this.state.person.findIndex(p => {
+    const p_idx = this.state.persons.findIndex(p => {
       return p.id === id;
     });
-
-    const p = {...this.state.person[p_idx]};
+    const p = {...this.state.persons[p_idx]};
     p.Name = event.target.value;
-
-    const p1 = [...this.state.person];
+    const p1 = [...this.state.persons];
     p1[p_idx] = p;
-
     this.setState({
-      person : p1
+      persons : p1
     })
   }
 
   toggleHandler = () => {
-    
     const flag = this.state.showContent;
     this.setState({
       showContent : !flag
@@ -41,49 +36,29 @@ class App extends Component {
   }
 
   deletePersonHandler = (idx) => {
-    
-    // const person = this.state.person; // non - immutable 
-    const person = [...this.state.person]; // immutable way of manipulating the state
-    person.splice(idx,1);
+    // const persons = this.state.persons; // non - immutable 
+    const persons = [...this.state.persons]; // immutable way of manipulating the state
+    persons.splice(idx,1);
     this.setState({
-      person: person
+      persons: persons
     })
   }
 
   render() {
-
-    let person = null;
-    let buttonMsg = "Show";
-    let buttoncls = '';
-
+    let persons = null;
     if(this.state.showContent) {
-      
-      person = (
-        <div>
-          <Persons person = {this.state.person}
+      persons = (
+          <Persons persons = {this.state.persons}
                    clicked = {this.deletePersonHandler}
                    changed = {this.nameChangedHandler}></Persons>
-        </div>
       )
-      buttonMsg = "Hide";
-      buttoncls = classes.Red;    
     }
-    let assignedClasses = [];
-
-    if(this.state.person.length <= 2) {
-      assignedClasses.push(classes.red);
-    }
-    if(this.state.person.length <= 1) {
-      assignedClasses.push(classes.bold);
-    }
-
     return (
         <div className={classes.App}>
-          <p className={assignedClasses.join(' ')}>It's working!!</p>
-          <button 
-            className = {buttoncls}
-            onClick = {this.toggleHandler}>{buttonMsg}</button>
-          {person}  
+          <Cockpit persons = {this.state.persons}
+                   toggle = {this.toggleHandler}
+                   showPersons = {this.state.showContent}></Cockpit>
+          {persons}  
         </div>
     );
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Person from './Person/Person';
 
-const Persons = (props) => props.person.map((p,idx) => {
+const Persons = (props) => props.persons.map((p,idx) => {
     return <Person 
             click = {() => props.clicked(idx)}
             Name = {p.Name}
